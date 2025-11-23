@@ -1,3 +1,5 @@
+import RatingPill from "@/components/ui/RatingPill";
+import { formatDate } from "@/utils/date";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
 import React, { FC } from "react";
@@ -50,11 +52,10 @@ const MovieCard: FC<Props> = ({
           </ThemedText>
 
           <View style={styles.metaRow}>
-            <ThemedText type="subtitle" style={styles.meta}>
-              {rating ? `★ ${rating}` : ""}
-            </ThemedText>
+            <RatingPill value={rating} />
+
             <ThemedText type="default" style={styles.meta}>
-              {releaseDate}
+              {formatDate(releaseDate)}
             </ThemedText>
           </View>
         </View>
