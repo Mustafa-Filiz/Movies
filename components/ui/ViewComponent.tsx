@@ -10,8 +10,8 @@ type Props = {
 const ViewComponent: FC<Props> = ({ children }) => {
   return (
     <SafeAreaProvider>
-      <SafeAreaView>
-        <ThemedView>{children}</ThemedView>
+      <SafeAreaView style={{ flex: 1 }}>
+        <ThemedView style={[styles.view]}>{children}</ThemedView>
       </SafeAreaView>
     </SafeAreaProvider>
   );
@@ -19,4 +19,9 @@ const ViewComponent: FC<Props> = ({ children }) => {
 
 export default ViewComponent;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  view: {
+    padding: 16,
+    flex: 1,
+  },
+});

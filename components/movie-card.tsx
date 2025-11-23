@@ -1,10 +1,12 @@
 import { Image } from "expo-image";
+import { Link } from "expo-router";
 import React, { FC } from "react";
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "./themed-text";
 import { ThemedView } from "./themed-view";
 
 type Props = {
+  id: string;
   title: string;
   imageUrl: string;
   description: string;
@@ -17,6 +19,7 @@ const size = "w500";
 const IMAGE_BASE = `${baseUrl}${size}`;
 
 const MovieCard: FC<Props> = ({
+  id,
   title,
   imageUrl,
   description,
@@ -26,31 +29,37 @@ const MovieCard: FC<Props> = ({
   const uri = imageUrl ? `${IMAGE_BASE}${imageUrl}` : undefined;
 
   return (
-    <ThemedView style={styles.card}>
-      {uri ? (
-        <Image source={{ uri }} style={styles.image} contentFit="cover" />
-      ) : (
-        <View style={[styles.image, styles.imagePlaceholder]} />
-      )}
+    <Link href={`/movie/${id}`}>
+      <ThemedView style={styles.card}>
+        {uri ? (
+          <Image source={{ uri }} style={styles.image} contentFit="cover" />
+        ) : (
+          <View style={[styles.image, styles.imagePlaceholder]} />
+        )}
 
-      <View style={styles.content}>
-        <ThemedText type="title" style={styles.title} numberOfLines={2}>
-          {title}
-        </ThemedText>
-        <ThemedText type="default" style={styles.description} numberOfLines={3}>
-          {description}
-        </ThemedText>
+        <View style={styles.content}>
+          <ThemedText type="title" style={styles.title} numberOfLines={2}>
+            {title}
+          </ThemedText>
+          <ThemedText
+            type="default"
+            style={styles.description}
+            numberOfLines={3}
+          >
+            {description}
+          </ThemedText>
 
-        <View style={styles.metaRow}>
-          <ThemedText type="subtitle" style={styles.meta}>
-            {rating ? `★ ${rating}` : ""}
-          </ThemedText>
-          <ThemedText type="default" style={styles.meta}>
-            {releaseDate}
-          </ThemedText>
+          <View style={styles.metaRow}>
+            <ThemedText type="subtitle" style={styles.meta}>
+              {rating ? `★ ${rating}` : ""}
+            </ThemedText>
+            <ThemedText type="default" style={styles.meta}>
+              {releaseDate}
+            </ThemedText>
+          </View>
         </View>
-      </View>
-    </ThemedView>
+      </ThemedView>
+    </Link>
   );
 };
 
