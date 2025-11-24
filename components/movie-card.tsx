@@ -1,4 +1,5 @@
 import RatingPill from "@/components/ui/RatingPill";
+import { IMAGE_BASE_URL, IMAGE_SIZE_W500 } from "@/constants";
 import { formatDate } from "@/utils/date";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
@@ -16,9 +17,7 @@ type Props = {
   releaseDate: string;
 };
 
-const baseUrl = "https://image.tmdb.org/t/p/";
-const size = "w500";
-const IMAGE_BASE = `${baseUrl}${size}`;
+const IMAGE_BASE = `${IMAGE_BASE_URL}${IMAGE_SIZE_W500}`;
 
 const MovieCard: FC<Props> = ({
   id,
