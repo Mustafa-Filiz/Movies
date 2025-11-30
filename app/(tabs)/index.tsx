@@ -1,15 +1,23 @@
-import MovieCard from "@/components/movie-card";
+import SwipeableMovieCard from "@/components/SwipeableMovieCard";
 import { ThemedText } from "@/components/themed-text";
 import CategoryDropdown from "@/components/ui/CategoryDropdown";
 import ViewComponent from "@/components/ui/ViewComponent";
+import { useFavorites } from "@/hooks/useFavorites";
 import { useMoviesByCategory } from "@/services/moviesApi";
-import React, { useState } from "react";
+import { useFocusEffect } from "expo-router";
+import React, { useCallback, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
 export default function HomeScreen() {
   const [category, setCategory] = useState<string>("now_playing");
-
   const { data } = useMoviesByCategory(category);
+  const { addToFavorites, isFavorite, loadFavorites } = useFavorites();
+
+  useFocusEffect(
+    useCallback(() => {
+      loadFavorites();
+    }, [loadFavorites])
+  );
 
   return (
     <ViewComponent>
@@ -22,13 +30,17 @@ export default function HomeScreen() {
       <FlatList
         data={data?.results ?? []}
         renderItem={({ item: movie }) => (
-          <MovieCard
-            id={String(movie.id)}
-            title={movie.title}
-            description={movie.overview}
-            imageUrl={movie.poster_path}
-            releaseDate={movie.release_date}
-            rating={movie.vote_average}
+          <SwipeableMovieCard
+            movie={{
+              id: movie.id,
+              title: movie.title,
+              overview: movie.overview,
+              poster_path: movie.poster_path,
+              release_date: movie.release_date,
+              vote_average: movie.vote_average,
+            }}
+            isFavorite={isFavorite(movie.id)}
+            onAddToFavorites={addToFavorites}
           />
         )}
         keyExtractor={(item) => String(item.id)}

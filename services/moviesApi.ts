@@ -5,16 +5,24 @@ import { useQuery } from "@tanstack/react-query";
 
 export const moviesApi = {
   getNowPlayingMovies: async () => {
-    return await customFetch<ApiResponse<Movie>>("/movie/now_playing");
+    return await customFetch<Omit<ApiResponse<Movie>, "dates">>(
+      "/movie/now_playing"
+    );
   },
   getPopularMovies: async () => {
-    return await customFetch<ApiResponse<Movie>>("/movie/popular");
+    return await customFetch<Omit<ApiResponse<Movie>, "dates">>(
+      "/movie/popular"
+    );
   },
   getTopRatedMovies: async () => {
-    return await customFetch<ApiResponse<Movie>>("/movie/top_rated");
+    return await customFetch<Omit<ApiResponse<Movie>, "dates">>(
+      "/movie/top_rated"
+    );
   },
   getUpcomingMovies: async () => {
-    return await customFetch<ApiResponse<Movie>>("/movie/upcoming");
+    return await customFetch<Omit<ApiResponse<Movie>, "dates">>(
+      "/movie/upcoming"
+    );
   },
   getMovieDetail: async (movieId: string) => {
     return await customFetch<MovieDetail>(`/movie/${movieId}`);
