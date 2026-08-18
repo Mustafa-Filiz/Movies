@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import MovieCard from "@/components/movie-card";
 import { IconSymbol } from "@/components/ui/icon-symbol";
-import { Movie } from "@/hooks/useFavorites";
+import { Movie } from "@/hooks/useFavourites";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
@@ -14,25 +15,25 @@ import Reanimated, {
 
 interface SwipeableMovieCardProps {
   movie: Movie;
-  isFavorite: boolean;
-  onAddToFavorites: (movieId: number) => void;
+  isFavourite: boolean;
+  toggleFavourite: (movieId: number) => void;
 }
 
 const SwipeableMovieCard: React.FC<SwipeableMovieCardProps> = ({
   movie,
-  isFavorite,
-  onAddToFavorites,
+  isFavourite,
+  toggleFavourite,
 }) => {
   const renderRightActions = (
     progress: SharedValue<number>,
-    drag: SharedValue<number>
+    drag: SharedValue<number>,
   ) => {
     const style = useAnimatedStyle(() => {
       const scale = interpolate(
         drag.value,
         [-80, 0],
         [1, 0],
-        Extrapolation.CLAMP
+        Extrapolation.CLAMP,
       );
       return {
         transform: [{ scale }],
@@ -43,13 +44,13 @@ const SwipeableMovieCard: React.FC<SwipeableMovieCardProps> = ({
       <RectButton
         style={styles.rightAction}
         onPress={() => {
-          onAddToFavorites(movie.id);
+          toggleFavourite(movie.id);
         }}
       >
         <Reanimated.View style={[styles.actionIcon, style]}>
           <IconSymbol
             size={30}
-            name={isFavorite ? "heart.fill" : "heart"}
+            name={isFavourite ? "heart.fill" : "heart"}
             color="white"
           />
         </Reanimated.View>

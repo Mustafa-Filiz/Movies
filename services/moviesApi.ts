@@ -6,26 +6,31 @@ import { useQuery } from "@tanstack/react-query";
 export const moviesApi = {
   getNowPlayingMovies: async () => {
     return await customFetch<Omit<ApiResponse<Movie>, "dates">>(
-      "/movie/now_playing"
+      "/movie/now_playing",
     );
   },
   getPopularMovies: async () => {
     return await customFetch<Omit<ApiResponse<Movie>, "dates">>(
-      "/movie/popular"
+      "/movie/popular",
     );
   },
   getTopRatedMovies: async () => {
     return await customFetch<Omit<ApiResponse<Movie>, "dates">>(
-      "/movie/top_rated"
+      "/movie/top_rated",
     );
   },
   getUpcomingMovies: async () => {
     return await customFetch<Omit<ApiResponse<Movie>, "dates">>(
-      "/movie/upcoming"
+      "/movie/upcoming",
     );
   },
   getMovieDetail: async (movieId: string) => {
     return await customFetch<MovieDetail>(`/movie/${movieId}`);
+  },
+  search: async (query: string) => {
+    return await customFetch<ApiResponse<Movie>>(
+      `/search/multi?query=${query}`,
+    );
   },
 };
 
@@ -77,5 +82,12 @@ export const useMovieDetail = (movieId: string) => {
     queryKey: ["movie", movieId],
     queryFn: () => moviesApi.getMovieDetail(movieId),
     enabled: !!movieId,
+  });
+};
+
+export const useSearch = (query: string) => {
+  return useQuery({
+    queryKey: ["search", query],
+    queryFn: () => moviesApi.search(query),
   });
 };

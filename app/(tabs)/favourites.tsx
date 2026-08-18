@@ -1,18 +1,18 @@
-import FavoriteMovieItem from "@/components/FavoriteMovieItem";
+import FavouriteMovieItem from "@/components/FavouriteMovieItem";
 import { ThemedText } from "@/components/themed-text";
 import ViewComponent from "@/components/ui/ViewComponent";
-import { useFavorites } from "@/hooks/useFavorites";
+import { useFavourites } from "@/hooks/useFavourites";
 import { useFocusEffect } from "expo-router";
 import React, { useCallback } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
 const TabFavouritesScreen = () => {
-  const { favorites, loadFavorites } = useFavorites();
+  const { favourites, loadFavourites } = useFavourites();
 
   useFocusEffect(
     useCallback(() => {
-      loadFavorites();
-    }, [loadFavorites])
+      loadFavourites();
+    }, [loadFavourites]),
   );
 
   return (
@@ -21,15 +21,15 @@ const TabFavouritesScreen = () => {
         <ThemedText type="title">Favourites</ThemedText>
       </View>
 
-      {favorites.length === 0 ? (
+      {favourites.length === 0 ? (
         <View style={styles.emptyContainer}>
-          <ThemedText>No favorites yet.</ThemedText>
+          <ThemedText>No favourites yet.</ThemedText>
         </View>
       ) : (
         <FlatList
-          data={favorites}
+          data={favourites}
           renderItem={({ item: movieId }) => (
-            <FavoriteMovieItem movieId={movieId} />
+            <FavouriteMovieItem movieId={movieId} />
           )}
           keyExtractor={(item) => String(item)}
           contentContainerStyle={{ paddingBottom: 32 }}

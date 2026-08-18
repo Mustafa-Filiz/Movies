@@ -2,7 +2,7 @@ import SwipeableMovieCard from "@/components/SwipeableMovieCard";
 import { ThemedText } from "@/components/themed-text";
 import CategoryDropdown from "@/components/ui/CategoryDropdown";
 import ViewComponent from "@/components/ui/ViewComponent";
-import { useFavorites } from "@/hooks/useFavorites";
+import { useFavourites } from "@/hooks/useFavourites";
 import { useMoviesByCategory } from "@/services/moviesApi";
 import { useFocusEffect } from "expo-router";
 import React, { useCallback, useState } from "react";
@@ -11,12 +11,12 @@ import { FlatList, StyleSheet, View } from "react-native";
 export default function HomeScreen() {
   const [category, setCategory] = useState<string>("now_playing");
   const { data } = useMoviesByCategory(category);
-  const { addToFavorites, isFavorite, loadFavorites } = useFavorites();
+  const { toggleFavourite, isFavourite, loadFavourites } = useFavourites();
 
   useFocusEffect(
     useCallback(() => {
-      loadFavorites();
-    }, [loadFavorites])
+      loadFavourites();
+    }, [loadFavourites]),
   );
 
   return (
@@ -39,8 +39,8 @@ export default function HomeScreen() {
               release_date: movie.release_date,
               vote_average: movie.vote_average,
             }}
-            isFavorite={isFavorite(movie.id)}
-            onAddToFavorites={addToFavorites}
+            isFavourite={isFavourite(movie.id)}
+            toggleFavourite={toggleFavourite}
           />
         )}
         keyExtractor={(item) => String(item.id)}

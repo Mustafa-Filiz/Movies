@@ -7,7 +7,7 @@ export async function customFetch<T>(url: string, options?: RequestInit) {
         Authorization: `Bearer ${process.env.EXPO_PUBLIC_TMDB_API_KEY}`,
       },
       ...options,
-    }
+    },
   );
 
   if (!response.ok) {
